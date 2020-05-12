@@ -2,7 +2,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.Iterator;
 
-public class MustCoursesFactory implements CourseCatalog {
+public class MustCoursesFactory extends CompositeComponent implements CourseCatalog {
 
 	private Enumeration<Course> courses;
 	
@@ -25,6 +25,13 @@ public class MustCoursesFactory implements CourseCatalog {
 		return new EnumerationIterator(courses);
 	}
 	
-	
+	@Override 
+	public String print() {
+		String out = "";
+		for (Course course: courseObjects) {
+			out += "\nCTIS "+ course.getCourseCode() + " " + course.getCourseName();
+		}
+		return out;
+	}
 
 }

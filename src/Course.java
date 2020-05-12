@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 
 public class Course extends Observable {
@@ -47,9 +48,15 @@ public class Course extends Observable {
 	
 	public boolean removeStudent(int id) {
 		boolean success = false;
-		for (Student s : enrolledStudents) {
-			if (s.getId() == id)
-				success = enrolledStudents.remove(s);
+		Iterator<Student> iter = enrolledStudents.iterator();
+
+		while (iter.hasNext()) {
+		    Student s = iter.next();
+
+		    if (s.getId() == id) {
+		        iter.remove();
+		        success = true;
+		    }
 		}
 		if (success) {
 			setChanged();

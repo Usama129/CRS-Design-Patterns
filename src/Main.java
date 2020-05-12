@@ -12,9 +12,7 @@ public class Main {
 		 MustCoursesFactory musts = new MustCoursesFactory();
 		 courseTypes.add(musts); 
 		 
-		 ArrayList<Course> mustList = Collections.list(musts.getCourses());
-		 FacultyMember fm = new FacultyMember(courseTypes, mustList);
-		 CRS crs = new CRS(courseTypes, mustList , fm); 
+		 CRS crs = new CRS(courseTypes, musts); 
 		
 		
 		 

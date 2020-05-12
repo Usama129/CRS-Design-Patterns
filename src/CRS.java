@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,18 +8,22 @@ import java.util.*;
 public class CRS {
 	
 	ArrayList<CourseCatalog> courseTypes = new ArrayList<>();
+	
+	MustCoursesFactory mustCoursesFactory;
+	
 	ArrayList<Course> mustCourses;
 	Scanner sc;
 	int opt;
 	InputStream reader;
 	FacultyMember faculty;
 	
-	public CRS(ArrayList<CourseCatalog> types, ArrayList<Course> musts, 
-			FacultyMember faculty) throws IOException {
+	public CRS(ArrayList<CourseCatalog> types, MustCoursesFactory mustCoursesFactory) throws IOException {
 		super();
-		this.faculty = faculty;
+		
 		this.courseTypes = types;
-		this.mustCourses = musts;
+		this.mustCoursesFactory = mustCoursesFactory;
+		this.mustCourses = Collections.list(mustCoursesFactory.getCourses());
+		this.faculty = new FacultyMember(courseTypes, mustCourses);
 		
 		sc = new Scanner(System.in);
 		
@@ -38,6 +40,7 @@ public class CRS {
 					+ "\nPress 2 to unregister from a course you are enrolled in"
 					+ "\nPress 3 to view remaining quota of a course"
 					+ "\nPress 4 if you are a faculty member"
+					+ "\nPress 5 to view all currently available courses"
 					+ "\nPress 0 to exit from CRS");
 			
 			opt = sc.nextInt();
@@ -61,6 +64,11 @@ public class CRS {
 				System.out.println("Enter the 5-digit access code for faculty members");
 				
 				faculty.beginSession(sc.nextInt());
+			}
+			
+			else if (opt == 5) {
+				
+				System.out.println(mustCoursesFactory.print());
 			}
 			
 		} while (opt != 0);
