@@ -1,5 +1,6 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +15,7 @@ public class CRS {
 	ArrayList<Course> mustCourses;
 	Scanner sc;
 	int opt;
-	InputStream reader;
+	FilterInputStream reader;
 	FacultyMember faculty;
 	
 	public CRS(ArrayList<CourseCatalog> types, MustCoursesFactory mustCoursesFactory) throws IOException {
@@ -95,8 +96,16 @@ public class CRS {
 		
 		boolean enrolled = false;
 		
+		
 		for (Course c : mustCourses) {
+			
 			if (c.getCourseCode() == courseCode) {
+				for(Student s : c.getEnrolledStudents()) {
+					if(s.getId() == student.id) {
+						System.out.println("You are already registered in this course.");
+						return;
+					}
+				}
 				enrolled = c.addStudent(student);
 				if (enrolled)
 					break;
